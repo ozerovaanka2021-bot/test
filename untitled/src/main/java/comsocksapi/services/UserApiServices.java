@@ -1,6 +1,7 @@
 package comsocksapi.services;
 
 import comsocksapi.assertions.AssertableResponse;
+import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.UserPayload;
 
 
@@ -15,9 +16,15 @@ public class UserApiServices extends ApiService {
     }
 
    public AssertableResponse confirmUser(String userToken){
-   return  new AssertableResponse(setup()
-           .pathParam("token", userToken)
+    return  new AssertableResponse(setup()
+           .queryParam("token", userToken)
            .when()
-           .get("/confirm/{token}"));
+           .get("/confirm"));
     }
+    public AssertableResponse loginUser(LoginPayload login){
+        return  new AssertableResponse(setup()
+                .body(login)
+                .when()
+                .post("/login"));
+}
 }

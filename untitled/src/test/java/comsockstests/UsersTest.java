@@ -5,7 +5,9 @@ import comsocksapi.ProjectConfig;
 import comsocksapi.conditions.Condition;
 import comsocksapi.conditions.Conditions;
 import comsocksapi.conditions.StatusCodeCondition;
+import comsocksapi.payloads.LoginPayload;
 import comsocksapi.responses.ErrorRegisterResponse;
+import comsocksapi.responses.LoginResponse;
 import comsocksapi.responses.UserRegisterResponse;
 import io.restassured.RestAssured;
 import org.aeonbits.owner.ConfigFactory;
@@ -70,7 +72,17 @@ public class UsersTest {
     @Test
     public void testConfirm(){
         String userToken = "a62a85a0-1ed6-430d-bbf5-3b3810413bb5";
-        userApiServices.setAuthToken(token);
-        userApiServices.confirmUser(userToken);
+        userApiServices.confirmUser(userToken)
+                .soudHave(Conditions.statusCode(400));
     }
+    @Test
+    public void userLogin(){
+        LoginPayload user = new LoginPayload()
+                .email("aozerova1234@gmail.com")
+                .password("123hblernjQ");
+        userApiServices.loginUser(user)
+                .soudHave(Conditions.statusCode(200))
+                .asPojo(LoginResponse.class);
+    }
+
 }
