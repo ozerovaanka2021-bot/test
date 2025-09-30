@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.junit.platform:junit-platform-suite:1.9.2'
+
+    testImplementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    // Основная зависимость Lombok для кода
+    implementation 'org.projectlombok:lombok:1.18.34'
+
+    // Аннотационный процессор — ОБЯЗАТЕЛЬНО для работы Lombok при компиляции
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+
+    // Если используете Lombok в тестах (например, в RestAssured-тестах)
+    testImplementation 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-maven
+
+}
+
+
+
+test {
+    useJUnitPlatform()
+
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
