@@ -8,6 +8,10 @@ import comsocksapi.payloads.UserPayload;
 public class UserApiServices extends ApiService {
 
 
+    public UserApiServices(String baseUrl) {
+        super(baseUrl);
+    }
+
     public AssertableResponse registerUser(UserPayload user) {
         return new AssertableResponse(setup()
                 .body(user)
@@ -27,4 +31,5 @@ public class UserApiServices extends ApiService {
                 .when()
                 .post("/login"));
 }
+
 }

@@ -8,6 +8,7 @@ import comsocksapi.conditions.StatusCodeCondition;
 import comsocksapi.payloads.LoginPayload;
 import comsocksapi.responses.ErrorRegisterResponse;
 import comsocksapi.responses.LoginResponse;
+import comsocksapi.responses.LoginUnauthorized;
 import comsocksapi.responses.UserRegisterResponse;
 import io.restassured.RestAssured;
 import org.aeonbits.owner.ConfigFactory;
@@ -28,14 +29,16 @@ import static org.hamcrest.Matchers.not;
 
 public class UsersTest {
 
-    private final UserApiServices userApiServices = new UserApiServices();
+    private UserApiServices userApiServices;
     private Faker faker;
 
     @BeforeAll
     public void setUp(){
+
         ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
+        userApiServices = new UserApiServices(config.authBaseURL());
         faker = new Faker(new Locale(config.locale()));
-        RestAssured.baseURI = config.baseURL();
+
 
     }
 
@@ -84,5 +87,13 @@ public class UsersTest {
                 .soudHave(Conditions.statusCode(200))
                 .asPojo(LoginResponse.class);
     }
-
+    @Test
+    public void userLogin401(){
+        LoginPayload user = new LoginPayload()
+                .email("aozerova17234@gmail.com")
+                .password("123hblernjQ");
+        userApiServices.loginUser(user)
+                .soudHave(Conditions.statusCode(400))
+                .asPojo(LoginUnauthorized.class);
+}
 }

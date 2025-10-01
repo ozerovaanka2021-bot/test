@@ -14,13 +14,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class ApiService {
+public abstract class ApiService {
+    private final String baseUrl;
+
+    public ApiService(String baseUrl){
+        this.baseUrl = baseUrl;
+    }
 
     protected RequestSpecification setup(){
 
 
         return RestAssured
                 .given()
+                .baseUri(this.baseUrl)
                 .contentType(ContentType.JSON)
                 .filters(getFilters());
     }

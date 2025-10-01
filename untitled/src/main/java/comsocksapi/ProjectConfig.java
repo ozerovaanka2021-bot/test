@@ -9,8 +9,9 @@ import org.aeonbits.owner.Config.Sources;
 public interface ProjectConfig extends Config{
     
 
-    @DefaultValue("https://auth.cinescope.krisqa.ru")
-    String baseURL();
+
+    String authBaseURL();
+    String paymentBaseURL();
     @DefaultValue("en")
     String locale();
     Boolean logging();
