@@ -2,6 +2,7 @@ package comsockstests;
 
 import com.github.javafaker.Faker;
 import comsocksapi.ProjectConfig;
+import comsocksapi.assertions.AssertableResponse;
 import comsocksapi.conditions.Condition;
 import comsocksapi.conditions.Conditions;
 import comsocksapi.conditions.StatusCodeCondition;
@@ -86,6 +87,9 @@ public class UsersTest {
         userApiServices.loginUser(user)
                 .soudHave(Conditions.statusCode(200))
                 .asPojo(LoginResponse.class);
+
+
+
     }
     @Test
     public void userLogin401(){

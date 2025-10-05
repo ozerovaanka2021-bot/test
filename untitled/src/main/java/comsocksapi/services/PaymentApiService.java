@@ -10,8 +10,11 @@ public class PaymentApiService extends ApiService {
         super(baseUrl);
     }
 
-    public AssertableResponse payment(PaymentPayload payment){
+    public AssertableResponse payment(PaymentPayload payment, String authToken){
         return new AssertableResponse(setup()
+                .headers(
+                        "Authorization",
+                        "Bearer " + authToken)
                 .body(payment)
                 .when()
                 .post("/create"));

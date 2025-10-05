@@ -3,6 +3,7 @@ package comsocksapi.services;
 import comsocksapi.assertions.AssertableResponse;
 import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.UserPayload;
+import comsocksapi.responses.LoginResponse;
 
 
 public class UserApiServices extends ApiService {
@@ -31,5 +32,13 @@ public class UserApiServices extends ApiService {
                 .when()
                 .post("/login"));
 }
-
+    public String getAuthToken(String email, String password){
+        LoginPayload user = new LoginPayload()
+                .email(email)
+                .password(password);
+        AssertableResponse response =  this.loginUser(user);
+        LoginResponse obgectResponse =  response.asPojo(LoginResponse.class);
+        String auth = obgectResponse.accessToken;
+        return auth;
+    }
 }

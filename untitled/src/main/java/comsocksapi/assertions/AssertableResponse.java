@@ -17,6 +17,10 @@ public class AssertableResponse {
         return this;
     }
 
+    /*
+    * Создаёт объектное представление ответа. Возвращает объект того типа, который передали в параметре
+    * @param tClass - тип возвращаемого значения
+    * */
     public<T> T asPojo(Class<T> tClass){
         return response.as(tClass);
     }
