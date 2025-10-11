@@ -1,6 +1,8 @@
 package comsocksapi.services;
 
 import comsocksapi.ProjectConfig;
+import io.qameta.allure.Allure;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -34,8 +36,8 @@ public abstract class ApiService {
     private List<Filter> getFilters(){
         ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
         if (config.logging()){
-            return Arrays.asList(new RequestLoggingFilter(), new ResponseLoggingFilter());
+            return Arrays.asList(new RequestLoggingFilter(), new ResponseLoggingFilter(),new AllureRestAssured());
         }
-            return Collections.emptyList();
+            return Collections.singletonList(new AllureRestAssured());
     }
 }
