@@ -19,6 +19,11 @@ dependencies {
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
     testImplementation 'io.rest-assured:rest-assured:5.5.0'
     implementation 'io.rest-assured:rest-assured:5.5.0'
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+    implementation 'io.qameta.allure:allure-java-commons:2.24.0'
+
+// https://mvnrepository.com/artifact/io.qameta.allure/allure-rest-assured
+    implementation group: 'io.qameta.allure', name: 'allure-rest-assured', version: '2.29.1'
 }
 
 test {
