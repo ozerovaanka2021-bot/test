@@ -42,3 +42,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 .idea/gradle.xml
+ui-test/allure-results

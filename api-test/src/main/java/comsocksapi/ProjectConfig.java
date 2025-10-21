@@ -9,7 +9,7 @@ import org.aeonbits.owner.Config.Sources;
 public interface ProjectConfig extends Config{
     
 
-
+    String loginBaseURL();
     String authBaseURL();
     String paymentBaseURL();
     @DefaultValue("en")

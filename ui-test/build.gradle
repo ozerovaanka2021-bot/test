@@ -16,6 +16,9 @@ dependencies {
     implementation group: 'com.codeborne', name: 'selenide', version: '6.5.2'
     implementation group: 'org.aeonbits.owner', name: 'owner', version: '1.0.12'
     implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.1'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+    testImplementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'io.rest-assured:rest-assured:5.5.0'
 }
 
 test {
