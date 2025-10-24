@@ -18,4 +18,8 @@ public class PaymentPayloadCard {
     private String expirationDate;
     @JsonProperty("securityCode")
     private int securityCode;
+    @JsonProperty("expirationMonth")
+    private String expirationMonth;
+    @JsonProperty("expirationYear")
+    private String expirationYear;
 }

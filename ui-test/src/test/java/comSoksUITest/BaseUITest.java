@@ -2,7 +2,6 @@ package comSoksUITest;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import comSoksUI.MainPage;
 import comsocksapi.ProjectConfig;
 import io.restassured.RestAssured;
 import org.aeonbits.owner.ConfigFactory;
@@ -11,7 +10,7 @@ import org.testng.annotations.BeforeSuite;
 
 public class BaseUITest {
     @BeforeSuite
-    public void setUp() {
+    public static void setUp() {
         // MainPage.open();
         ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
 
