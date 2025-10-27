@@ -2,15 +2,14 @@ package comSoksUITest;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import comSoksUI.CatalogPage;
-import comSoksUI.MainPage;
-import comSoksUI.MovePaymentPage;
-import comSoksUI.SuccessfulPaymentPage;
+import comSoksUI.*;
 import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.PaymentPayload;
 import comsocksapi.payloads.PaymentPayloadCard;
 import org.openqa.selenium.Cookie;
 import org.testng.annotations.Test;
+
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -33,7 +32,7 @@ public class ShoppingCardTest extends BaseUITest{
                 .amount(1)
                 .card(payloadCard);
 
-        //создание объеста юзер и авторизация
+        //создание объекта юзер и авторизация
         LoginPayload user = new LoginPayload()
                 .email("annatesttesttesttest@gmail.ru")
                 .password("123hblernjQ");
@@ -58,6 +57,12 @@ public class ShoppingCardTest extends BaseUITest{
 
         MovePaymentPage.createPayment();
         SuccessfulPaymentPage.notificationAppearance();
+
+        LoggedUserPage loggedUserPage =  at(LoggedUserPage.class);
+
+
+        loggedUserPage.profile().shouldHave(text("Профиль")).click();
+        loggedUserPage.logoutBtn().shouldHave(text("Выход")).click();
 
 
 

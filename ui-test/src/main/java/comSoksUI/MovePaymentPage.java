@@ -3,6 +3,9 @@ package comSoksUI;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
@@ -23,7 +26,7 @@ public class MovePaymentPage {
         //div[role='option']:nth-child(12)
         Selenide.$("div[role='option']:nth-child("+expirationMonth+")").click();
         Selenide.$("[data-qa-id=\"payment_card_year_select\"]").click();
-        Selenide.$("option[value=\""+ expirationYear+"\"]").click();
+        Selenide.$$("div[role='option']").findBy(text(expirationYear)).click();
         Selenide.$("[data-qa-id=\"payment_card_cvc_input\"]").setValue(String.valueOf(securityCode));
         Selenide.$("[data-qa-id=\"payment_card_cvc_input\"]").click();
     return page(MovePaymentPage.class);
@@ -32,7 +35,7 @@ public class MovePaymentPage {
     }
     @Step
     public static MovePaymentPage createPayment(){
-        $("data-qa-id=\"payment_submit_button\"").click();
+        $("[data-qa-id=\"payment_submit_button\"]").click();
         return page(MovePaymentPage.class);
     }
 
