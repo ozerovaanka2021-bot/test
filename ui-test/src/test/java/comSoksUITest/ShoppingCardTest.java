@@ -3,17 +3,22 @@ package comSoksUITest;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import comSoksUI.*;
+import comsocksapi.ProjectConfig;
 import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.PaymentPayload;
 import comsocksapi.payloads.PaymentPayloadCard;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Cookie;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static io.restassured.RestAssured.config;
 
 public class ShoppingCardTest extends BaseUITest{
+    private ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
+
 
     @Test
     public void userCanPayToCart(){
@@ -34,8 +39,8 @@ public class ShoppingCardTest extends BaseUITest{
 
         //создание объекта юзер и авторизация
         LoginPayload user = new LoginPayload()
-                .email("annatesttesttesttest@gmail.ru")
-                .password("123hblernjQ");
+                .email(config.paymentEmail())
+                .password(config.paymentPassword());
 
         MainPage.open()
                 .loginAs(user.email(), user.password());

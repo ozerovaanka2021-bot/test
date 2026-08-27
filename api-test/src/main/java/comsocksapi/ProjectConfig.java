@@ -1,18 +1,24 @@
 package comsocksapi;
 
 
-import lombok.Builder;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
 
-@Sources({"classpath:config.properties"})
-public interface ProjectConfig extends Config{
-    
+@Sources({
+        "file:${user.home}/.test-secrets.properties",
+        "classpath:config.properties"
+})
+public interface ProjectConfig extends Config {
 
     String loginBaseURL();
     String authBaseURL();
     String paymentBaseURL();
+
     @DefaultValue("en")
-    String locale();
+    String locale(String en);
+
     Boolean logging();
+
+    String paymentEmail();     // новое
+    String paymentPassword();  // новое
 }

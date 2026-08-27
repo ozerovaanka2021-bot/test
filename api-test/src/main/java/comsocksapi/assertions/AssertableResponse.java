@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AssertableResponse {
 
        private final Response response;
-    @Step
+    @Step("api response should have{condition}")
     public AssertableResponse soudHave(Condition condition){
        log.info("About check condition {}", condition);
         condition.check(response);

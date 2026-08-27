@@ -4,6 +4,7 @@ import comsocksapi.assertions.AssertableResponse;
 import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.UserPayload;
 import comsocksapi.responses.LoginResponse;
+import io.qameta.allure.Step;
 
 
 public class UserApiServices extends ApiService {
@@ -13,6 +14,7 @@ public class UserApiServices extends ApiService {
         super(baseUrl);
     }
 
+    @Step
     public AssertableResponse registerUser(UserPayload user) {
         return new AssertableResponse(setup()
                 .body(user)

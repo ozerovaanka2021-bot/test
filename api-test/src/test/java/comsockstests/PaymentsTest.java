@@ -24,13 +24,13 @@ public class PaymentsTest {
     @BeforeAll
     public void setup() {
         Allure.step("Получение токена авторизации", () -> {
-            authToken = userApiServices.getAuthToken("aozerova1234@gmail.com", "jChZV2wnGJ8Ufxh");
+            authToken = userApiServices.getAuthToken(config.paymentEmail(), config.paymentPassword());
             Allure.addAttachment("Токен авторизации", "text/plain", authToken);
         });
     }
 
     @Test
-    @Description("Тест проверяет, что 2 + 2 = 4")
+    @Description("Оплата картой")
     public void testCanCreatePayment() {
 
         // 🔹 Объявляем переменные ДО шагов

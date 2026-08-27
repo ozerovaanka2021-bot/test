@@ -1,0 +1,7 @@
+node{
+stage("checkout repo"){
+git branch : 'main',
+credentialsId: 'github-creds',
+url: 'https://github.com/ozerovaanka2021-bot/test.git'
+}
+}

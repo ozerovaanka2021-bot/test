@@ -62,9 +62,9 @@ test {
     systemProperty 'allure.results.directory', 'build/allure-results'
     systemProperty 'allure.results.directory', file('build/allure-results').absolutePath
 }
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
 
+
+allure {
+    version = '4.1.0'
+    autoconfigure = true
+}

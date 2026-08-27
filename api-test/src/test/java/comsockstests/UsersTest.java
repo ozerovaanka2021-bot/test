@@ -19,28 +19,32 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.Locale;
 
+import static io.restassured.RestAssured.config;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UsersTest {
 
     private UserApiServices userApiServices;
     private Faker faker;
+    private ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
+
 
     @BeforeAll
     public void setUp() {
         Allure.step("Инициализация конфигурации и сервисов", () -> {
             ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
             userApiServices = new UserApiServices(config.authBaseURL());
-            faker = new Faker(new Locale(config.locale()));
+            faker = new Faker(new Locale(config.locale("en")));
         });
     }
 
     @Test
     public void testRegisterUser() {
         UserPayload user = new UserPayload()
-                .email("annatesttestte88867675sttest@gmail.ru")
+                .email(config.paymentEmail())
                 .fullName(faker.name().fullName())
-                .password("123hblernjQ")
-                .passwordRepeat("123hblernjQ");
+                .password(config.paymentEmail())
+                .passwordRepeat(config.paymentEmail());
 
         Allure.step("Регистрация нового пользователя", () -> {
             Allure.addAttachment("Тело запроса", "application/json", user.toString());
@@ -60,10 +64,10 @@ public class UsersTest {
     @Test
     public void testCanNotRegisterSameUserTwice() {
         UserPayload user = new UserPayload()
-                .email("ara.feest@gmail.com")
+                .email(config.paymentEmail())
                 .fullName(faker.name().fullName())
-                .password("123hblernjQ")
-                .passwordRepeat("123hblernjQ");
+                .password(config.paymentPassword())
+                .passwordRepeat(config.paymentPassword());
 
         Allure.step("Попытка повторной регистрации существующего пользователя", () -> {
             Allure.addAttachment("Тело запроса", "application/json", user.toString());
@@ -94,8 +98,8 @@ public class UsersTest {
     @Test
     public void userLogin() {
         LoginPayload user = new LoginPayload()
-                .email("annatesttesttesttest@gmail.ru")
-                .password("123hblernjQ");
+                .email(config.paymentEmail())
+                .password(config.paymentPassword());
 
         Allure.step("Авторизация существующего пользователя", () -> {
             Allure.addAttachment("Тело запроса", "application/json", user.toString());
@@ -115,8 +119,8 @@ public class UsersTest {
     @Test
     public void userLogin401() {
         LoginPayload user = new LoginPayload()
-                .email("aozerova17234@gmail.com")
-                .password("123hblernjQ");
+                .email(config.paymentEmail())
+                .password(config.paymentPassword());
 
         Allure.step("Попытка входа с неверными данными", () -> {
             Allure.addAttachment("Тело запроса", "application/json", user.toString());

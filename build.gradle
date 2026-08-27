@@ -1,5 +1,7 @@
+
 plugins {
     id 'java'
+    id("io.qameta.allure") version "4.1.0" apply false
 }
 
 group = 'org.example'
@@ -7,13 +9,15 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    testImplementation 'org.junit.platform:junit-platform-suite:1.9.2'
 
-    testImplementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    implementation 'org.junit.platform:junit-platform-suite:1.9.2'
+    testImplementation 'io.qameta.allure:allure-junit5:2.25.0'
+
     implementation 'io.rest-assured:rest-assured:5.5.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     // Основная зависимость Lombok для кода
@@ -40,4 +44,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+subprojects {
+    apply plugin: 'io.qameta.allure'
 }

@@ -26,10 +26,10 @@ public class TestLogin extends  BaseUITest{
     public void testRegisterUser(){
 
         UserPayload userPayload = new UserPayload()
-                .email(new UID().toString().replace(":", "").replace(":", "") + "tes09ttest@gmail.ru")
+                .email(new UID().toString().replace(":", "").replace(":", "") + config.paymentEmail())
                 .fullName("Пыфвыв Авыаыв")
-                .password("123hblernjQ")
-                .passwordRepeat("123hblernjQ");
+                .password(config.paymentPassword())
+                .passwordRepeat(config.paymentPassword());
 
         UserRegisterResponse response =  userApiServices.registerUser(userPayload)
                 .soudHave(Conditions.statusCode(201)).asPojo(UserRegisterResponse.class);
