@@ -58,7 +58,7 @@ public class PaymentsTest {
         // 🟢 Шаг 3: Отправка запроса
         Allure.step("Отправка платежа с токеном " + authToken.substring(0, 8) + "...", () -> {
             payment.payment(payload, authToken)
-                    .soudHave(Conditions.statusCode(201));
+                    .shouldHave(Conditions.statusCode(201));
 
             Allure.addAttachment("Заголовки запроса", "text/plain", "Authorization: Bearer " + authToken);
         });

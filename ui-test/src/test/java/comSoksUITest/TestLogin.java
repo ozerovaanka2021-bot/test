@@ -32,7 +32,7 @@ public class TestLogin extends  BaseUITest{
                 .passwordRepeat(config.paymentPassword());
 
         UserRegisterResponse response =  userApiServices.registerUser(userPayload)
-                .soudHave(Conditions.statusCode(201)).asPojo(UserRegisterResponse.class);
+                .shouldHave(Conditions.statusCode(201)).asPojo(UserRegisterResponse.class);
 
 
         response.getId();

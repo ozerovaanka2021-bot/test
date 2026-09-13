@@ -53,7 +53,7 @@ public class UsersTest {
         AssertableResponse response = userApiServices.registerUser(user);
 
         Allure.step("Проверка статуса 201 и извлечение ID", () -> {
-            response.soudHave(Conditions.statusCode(201)); // ← оставлено как есть
+            response.shouldHave(Conditions.statusCode(201)); // ← оставлено как есть
 
             UserRegisterResponse registerResponse = response.asPojo(UserRegisterResponse.class);
             Allure.addAttachment("Ответ сервера", "application/json", registerResponse.toString());
@@ -76,7 +76,7 @@ public class UsersTest {
         AssertableResponse response = userApiServices.registerUser(user);
 
         Allure.step("Проверка статуса 409 (конфликт)", () -> {
-            response.soudHave(Conditions.statusCode(409)); // ← оставлено как есть
+            response.shouldHave(Conditions.statusCode(409)); // ← оставлено как есть
 
             ErrorRegisterResponse errorResponse = response.asPojo(ErrorRegisterResponse.class);
             Allure.addAttachment("Ответ об ошибке", "application/json", errorResponse.toString());
@@ -89,7 +89,7 @@ public class UsersTest {
 
         Allure.step("Подтверждение пользователя с токеном: " + userToken, () -> {
             AssertableResponse response = userApiServices.confirmUser(userToken);
-            response.soudHave(Conditions.statusCode(400)); // ← оставлено как есть
+            response.shouldHave(Conditions.statusCode(400)); // ← оставлено как есть
 
             Allure.addAttachment("Статус ответа", "text/plain", "400 Bad Request");
         });
@@ -108,7 +108,7 @@ public class UsersTest {
         AssertableResponse response = userApiServices.loginUser(user);
 
         Allure.step("Проверка успешного входа (статус 200)", () -> {
-            response.soudHave(Conditions.statusCode(200)); // ← оставлено как есть
+            response.shouldHave(Conditions.statusCode(200)); // ← оставлено как есть
 
             LoginResponse loginResponse = response.asPojo(LoginResponse.class);
             Allure.addAttachment("Ответ сервера", "application/json", loginResponse.toString());
@@ -129,7 +129,7 @@ public class UsersTest {
         AssertableResponse response = userApiServices.loginUser(user);
 
         Allure.step("Проверка ошибки 400", () -> {
-            response.soudHave(Conditions.statusCode(400)); // ← оставлено как есть
+            response.shouldHave(Conditions.statusCode(400)); // ← оставлено как есть
 
             LoginUnauthorized error = response.asPojo(LoginUnauthorized.class);
             Allure.addAttachment("Ответ об ошибке", "application/json", error.toString());
