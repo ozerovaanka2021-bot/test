@@ -10,6 +10,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -30,8 +31,10 @@ public class PaymentsTest {
     }
 
     @Test
-    @Description("Оплата картой")
+    @DisplayName("Успешная оплата фильма банковской картой")
+    @Description("Тест проверяет, что авторизованный пользователь может создать платёж банковской картой с валидными данными и получить статус 201")
     public void testCanCreatePayment() {
+
 
         // 🔹 Объявляем переменные ДО шагов
         PaymentPayloadCard payloadCard = new PaymentPayloadCard()
