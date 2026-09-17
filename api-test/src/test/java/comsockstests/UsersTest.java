@@ -40,11 +40,13 @@ public class UsersTest {
 
     @Test
     public void testRegisterUser() {
+        String uuid = faker.internet().uuid();
         UserPayload user = new UserPayload()
-                .email(config.paymentEmail())
+                .login("user" + uuid.substring(0, 8))
+                .email(uuid + "@example.com")
                 .fullName(faker.name().fullName())
-                .password(config.paymentEmail())
-                .passwordRepeat(config.paymentEmail());
+                .password("Super123!")
+                .passwordRepeat("Super123!");
 
         Allure.step("Регистрация нового пользователя", () -> {
             Allure.addAttachment("Тело запроса", "application/json", user.toString());
@@ -53,33 +55,30 @@ public class UsersTest {
         AssertableResponse response = userApiServices.registerUser(user);
 
         Allure.step("Проверка статуса 201 и извлечение ID", () -> {
-            response.shouldHave(Conditions.statusCode(201)); // ← оставлено как есть
-
+            response.shouldHave(Conditions.statusCode(201));
             UserRegisterResponse registerResponse = response.asPojo(UserRegisterResponse.class);
             Allure.addAttachment("Ответ сервера", "application/json", registerResponse.toString());
-            Allure.addAttachment("ID пользователя", registerResponse.getId().toString());
         });
     }
 
     @Test
     public void testCanNotRegisterSameUserTwice() {
+        String uuid = faker.internet().uuid();
         UserPayload user = new UserPayload()
-                .email(config.paymentEmail())
+                .login("user" + uuid.substring(0, 8))
+                .email(uuid + "@example.com")
                 .fullName(faker.name().fullName())
-                .password(config.paymentPassword())
-                .passwordRepeat(config.paymentPassword());
+                .password("Super123!")
+                .passwordRepeat("Super123!");
 
-        Allure.step("Попытка повторной регистрации существующего пользователя", () -> {
-            Allure.addAttachment("Тело запроса", "application/json", user.toString());
+        Allure.step("Регистрация пользователя (первый раз)", () -> {
+            userApiServices.registerUser(user)
+                    .shouldHave(Conditions.statusCode(201));
         });
 
-        AssertableResponse response = userApiServices.registerUser(user);
-
-        Allure.step("Проверка статуса 409 (конфликт)", () -> {
-            response.shouldHave(Conditions.statusCode(409)); // ← оставлено как есть
-
-            ErrorRegisterResponse errorResponse = response.asPojo(ErrorRegisterResponse.class);
-            Allure.addAttachment("Ответ об ошибке", "application/json", errorResponse.toString());
+        Allure.step("Попытка повторной регистрации того же пользователя", () -> {
+            userApiServices.registerUser(user)
+                    .shouldHave(Conditions.statusCode(409));
         });
     }
 
