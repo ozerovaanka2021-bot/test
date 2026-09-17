@@ -26,7 +26,7 @@ public class PaymentsTest {
     public void setup() {
         Allure.step("Получение токена авторизации", () -> {
             authToken = userApiServices.getAuthToken(config.paymentEmail(), config.paymentPassword());
-            Allure.addAttachment("Токен авторизации", "text/plain", authToken);
+            Allure.addAttachment("Токен авторизации", "text/plain", authToken.substring(0, 8) + "...");
         });
     }
 
@@ -62,8 +62,6 @@ public class PaymentsTest {
         Allure.step("Отправка платежа с токеном " + authToken.substring(0, 8) + "...", () -> {
             payment.payment(payload, authToken)
                     .shouldHave(Conditions.statusCode(201));
-
-            Allure.addAttachment("Заголовки запроса", "text/plain", "Authorization: Bearer " + authToken);
-        });
+              });
     }
 }

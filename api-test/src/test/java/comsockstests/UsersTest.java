@@ -111,8 +111,7 @@ public class UsersTest {
             response.shouldHave(Conditions.statusCode(200)); // ← оставлено как есть
 
             LoginResponse loginResponse = response.asPojo(LoginResponse.class);
-            Allure.addAttachment("Ответ сервера", "application/json", loginResponse.toString());
-            Allure.addAttachment("Access Token", loginResponse.getAccessToken());
+            Allure.addAttachment("Access Token", "text/plain", loginResponse.getAccessToken().substring(0, 8) + "...");
         });
     }
 
