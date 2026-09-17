@@ -23,15 +23,21 @@ public class BaseUITest {
         Configuration.browser = "chrome";
         Configuration.timeout = 10000;
 
-        // WebDriver setup
-        WebDriverManager.chromedriver().setup();
+        // WebDriver setup: локально или удалённо (Selenoid)
+        if (config.remoteUrl().isBlank()) {
+            WebDriverManager.chromedriver().setup();
+        } else {
+            Configuration.remote = config.remoteUrl();
+        }
 
         // Chrome options
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless"); // headless для CI
+        if (config.headless()) {
+            options.addArguments("--headless");
+        }
         Configuration.browserCapabilities = options;
     }
 

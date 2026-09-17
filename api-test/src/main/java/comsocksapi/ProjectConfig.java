@@ -21,4 +21,10 @@ public interface ProjectConfig extends Config {
 
     String paymentEmail();     // новое
     String paymentPassword();  // новое
+
+    @DefaultValue("true")
+    boolean headless();
+
+    @DefaultValue("")
+    String remoteUrl();
 }
