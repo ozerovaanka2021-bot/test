@@ -44,15 +44,7 @@ public class ShoppingCardTest extends BaseUITest{
 
         MainPage.open()
                 .loginAs(user.email(), user.password());
-        try
-        {
 
-            Thread.sleep(2000);
-
-        }
-        catch (Exception e){
-
-        }
         //покупка фильма с объектом карты
        // CatalogPage.open()
         at(CatalogPage.class)
