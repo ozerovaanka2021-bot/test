@@ -26,7 +26,8 @@ public class UserPayload {
     @JsonProperty("passwordRepeat")
     private String passwordRepeat;
 
-
+    @JsonProperty("login")
+    private String login;
 
 
 
