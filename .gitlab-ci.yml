@@ -26,7 +26,8 @@ compile:
 unit-tests:
   stage: test
   script:
-    - sh gradlew --no-daemon test
+    - printf 'paymentEmail=%s\npaymentPassword=%s\n' "$PAYMENT_EMAIL" "$PAYMENT_PASSWORD" > "$HOME/.test-secrets.properties"
+      - sh gradlew --no-daemon test
   artifacts:
     when: always
     expire_in: 1 day
