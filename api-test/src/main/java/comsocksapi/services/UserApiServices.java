@@ -22,12 +22,8 @@ public class UserApiServices extends ApiService {
                 .post("/register"));
     }
 
-   public AssertableResponse confirmUser(String userToken){
-    return  new AssertableResponse(setup()
-           .queryParam("token", userToken)
-           .when()
-           .get("/confirm"));
-    }
+
+
     public AssertableResponse loginUser(LoginPayload login){
         return  new AssertableResponse(setup()
                 .body(login)
