@@ -31,10 +31,10 @@ unit-tests:
     when: always
     expire_in: 1 day
     paths:
-      - build/test-results/test/TEST-*.xml
-      - build/allure-results/
+      - "**/build/test-results/test/TEST-*.xml"
+      - "**/build/allure-results/"
     reports:
-      junit: build/test-results/test/TEST-*.xml
+      junit: "**/build/test-results/test/TEST-*.xml"
 
 quality-gate:
   stage: gate

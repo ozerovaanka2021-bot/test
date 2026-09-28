@@ -13,9 +13,8 @@ pipeline {
       steps { sh 'sh gradlew --no-daemon test' }
           post {
        always {
-          junit 'build/test-results/test/TEST-*.xml'
-         archiveArtifacts artifacts: 'build/allure-results/**/*', allowEmptyArchive: true
-       }
+        junit '**/build/test-results/test/TEST-*.xml'
+         archiveArtifacts artifacts: '**/build/allure-results/**/*', allowEmptyArchive: true       }
      }
     }
     stage('gate') {
