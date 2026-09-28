@@ -35,7 +35,7 @@ public class
         Allure.step("Инициализация конфигурации и сервисов", () -> {
             ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
             userApiServices = new UserApiServices(config.authBaseURL());
-            faker = new Faker(new Locale(config.locale("en")));
+            faker = new Faker(new Locale(config.locale("ru")));
         });
     }
 
