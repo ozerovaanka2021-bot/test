@@ -1,9 +1,13 @@
 package comsockstests;
 
+import com.github.javafaker.Faker;
 import comsocksapi.ProjectConfig;
 import comsocksapi.conditions.Conditions;
+import comsocksapi.payloads.LoginPayload;
 import comsocksapi.payloads.PaymentPayload;
 import comsocksapi.payloads.PaymentPayloadCard;
+import comsocksapi.payloads.UserPayload;
+import comsocksapi.responses.LoginResponse;
 import comsocksapi.services.PaymentApiService;
 import comsocksapi.services.UserApiServices;
 import io.qameta.allure.Allure;
@@ -24,9 +28,29 @@ public class PaymentsTest {
 
     @BeforeAll
     public void setup() {
-        Allure.step("Получение токена авторизации", () -> {
-            authToken = userApiServices.getAuthToken(config.paymentEmail(), config.paymentPassword());
-            Allure.addAttachment("Токен авторизации", "text/plain", authToken.substring(0, 8) + "...");
+        Allure.step("Создание и регистрация тестового пользователя для оплаты", () -> {
+            Faker faker = new Faker();
+            String email = faker.internet().emailAddress();
+            String password = "Test123!";
+            String login = email.split("@")[0];
+
+            UserPayload newUser = new UserPayload()
+                    .login(login)
+                    .email(email)
+                    .fullName(faker.name().fullName())
+                    .password(password)
+                    .passwordRepeat(password);
+
+            userApiServices.registerUser(newUser).shouldHave(Conditions.statusCode(201));
+
+            LoginPayload loginPayload = new LoginPayload()
+                    .login(login)
+                    .password(password);
+
+            LoginResponse loginResponse = userApiServices.loginUser(loginPayload).asPojo(LoginResponse.class);
+            this.authToken = loginResponse.getAccessToken();
+            
+            Allure.addAttachment("Токен авторизации", "text/plain", this.authToken.substring(0, 8) + "...");
         });
     }
 
@@ -35,16 +59,15 @@ public class PaymentsTest {
     @Description("Тест проверяет, что авторизованный пользователь может создать платёж банковской картой с валидными данными и получить статус 201")
     public void testCanCreatePayment() {
 
-
         // 🔹 Объявляем переменные ДО шагов
         PaymentPayloadCard payloadCard = new PaymentPayloadCard()
                 .cardNumber("4242424242424242")
-                .cardHolder("dfgdfg hfghf")
-                .expirationDate("12/25")
+                .cardHolder("John Doe")
+                .expirationDate("12/26")
                 .securityCode(123);
 
         PaymentPayload payload = new PaymentPayload()
-                .movieId(2143)
+                .movieId(900000002)
                 .amount(1)
                 .card(payloadCard);
 
@@ -58,10 +81,10 @@ public class PaymentsTest {
             Allure.addAttachment("Тело платежа", "application/json", payload.toString());
         });
 
-        // 🟢 Шаг 3: Отправка запроса
+        //  Шаг 3: Отправка запроса
         Allure.step("Отправка платежа с токеном " + authToken.substring(0, 8) + "...", () -> {
             payment.payment(payload, authToken)
                     .shouldHave(Conditions.statusCode(201));
-              });
+        });
     }
 }
